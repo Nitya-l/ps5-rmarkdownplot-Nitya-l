@@ -17,14 +17,15 @@ gapminder <- read.delim("gapminder.csv.bz2")
 
 ```
 
-```{r}
-## Question 2
-head(gapminder,5)
-```
 
 #### 2. (2pt) Load data. How many rows/columns do we have? 
 
 We have  `r nrow(gapminder)`  rows and `r ncol(gapminder)` columns in this data set.
+
+```{r}
+## Question 3
+head(gapminder,5)
+```
 
 #### 3. (2pt) Print a small sample of data. Does it look ok? 
 
@@ -61,10 +62,11 @@ There is only `r nrow(iso2_name)` ISO-2 code that corresponds to more than 1 nam
 iso3_name <- gapminder %>% select(iso3, name) %>% group_by(name) %>% summarize(unique_names_number = n_distinct(iso3, na.rm = TRUE)) %>% filter(unique_names_number > 1) 
 
 name_iso3 <- gapminder %>% select(iso3,name) %>% filter(name == "") %>% group_by(iso3) %>% summarize()
+head(name_iso3)
 ```
 
 ##### (b) (5pt) Now repeat the same for name and iso3-code. Are there country names that have more than one iso3-code? What are these countries? Hint: two of these entitites are CHANISL and NLD CURACAO.
-There are `r nrow(name_iso3)`, country names corresponding to more than one ISO-3 code. These countries are, `r name_iso3[1,]`, `r name_iso3[2,]`, `r name_iso3[3,]` and, `r name_iso3[4,]`. 
+There are `r nrow(name_iso3)` country names corresponding to more than one ISO-3 code. The ISO-3 codes for these countries are, `r name_iso3[1,]`, `r name_iso3[2,]`, `r name_iso3[3,]` and, `r name_iso3[4,]` but their actual names are unknown and are represented by a blank name. 
 
 ```{r}
 ##Question 3
@@ -133,7 +135,7 @@ ggplot(co2_region_plot, aes(x = time, y = mean_co2, color = region))+
 
 #### 4. (6pt) Compute average CO2 emissions per capita across the continents (assume region is the same as continent). Comment what do you see. Note: just compute averages over countries and ignore the fact that countries are of different size. Hint: Americas 2016 should be 4.80.
 
-According to the per region, is is obvious that Africa's CO2 emissions have not significantly changed from 1960 to 2019, and they have been the lowest out of all the regions for this entire period. The Americas on the other hand saw a significant decrease in CO2 emissions overall and saw many peaks and low points over the years. Asia and Oceania both saw in increase in CO2 but Asia saw a more significant increase implying that Asia had more CO2 emissions per person develop over this period, perhaps due to an increase in manufacturing industries using carbon based energy sources. Europe's emissions in 2016 and 1960 are relatively the same but it experiences changes over the years. Essentially, this plot indicates that there was a shift in the largest CO2 producing regions from Europe/Americas to Asia and Europe. Asia makes sense because in the present, Asia is increasing manufacturing industries and depends on carbon based energy sources especially with their oil production countries so these countries are bound to emit more CO2 per person. The Americas are switching to other sources such as light, and water so they emit less CO2, and European countries have small populations and carbon dependent energy sources so their emissions are higher per person. 
+According to the per region plot, is is obvious that Africa's CO2 emissions have not significantly changed from 1960 to 2019, and they have been the lowest out of all the regions for this entire period. The Americas on the other hand saw a significant decrease in CO2 emissions overall and saw many peaks and low points over the years. Asia and Oceania both saw in increase in CO2 but Asia saw a more significant increase implying that Asia had more CO2 emissions per person develop over this period, perhaps due to an increase in manufacturing industries using carbon based energy sources. Europe's emissions in 2016 and 1960 are relatively the same but it experiences changes over the years. Essentially, this plot indicates that there was a shift in the largest CO2 producing regions from Europe/Americas to Asia and Europe. Asia makes sense because in the present, Asia is increasing manufacturing industries and depends on carbon based energy sources especially with their oil production countries so these countries are bound to emit more CO2 per person. The Americas are switching to other sources such as light, and water so they emit less CO2, and European countries have small populations and carbon dependent energy sources so their emissions are higher per person. 
 
 ```{r}
 ## Question 5
@@ -190,9 +192,11 @@ ggplot(GDP_LE_2019, aes(x = GDP_PC, y = lifeExpectancy, color = region))+
 
 #### 2. (4pt) Make a similar plot, but this time use 2019 data only.
 
+The 2019 life expectancy plot has a shift in both life expectancy and GDP values as seen by the shift in scales compared to 1960 to include larger GDP_PC and life expectancy values. The general trend for 2019 remains the same as 1960 in the sense that Europe tends to dominate the higher life expectancy values as well as a few American countries and African countries tend to have lower life expectancy and GDP_PC values. In this graph, there are more Asian countries closer to European life expectancy and GDP values. I also notice that the population of the European nations as well as Asian nations that have high GDP values and life expectancy have smaller populations. This may play a role in life expectancy being high because smaller populations means more money and resources per person, so they are able to lead lifestyles that help increase their life span. This only applies if they have the money to begin with however, because small African nations also have small life expectancy and GDP_PC values. Large countries tend to find a balance with life expectancy and GDP_PC because these countries have to maintain lifestyles with less money per person, due to high populations. Such values indicate the possible disparities between the regions of the world in access to wealth, healthcare, and other resources. 
+
 #### 3. (6pt) Compare these two plots and comment what do you see. How has world developed through the last 60 years?
 
-In 2019, almost all countries in regions globally seemed to have increased in life expectancy and population. This is shown by the shift the of y-axis scale to include above 80 years of age, since now there are countries with life expectancy above 80 years and by the change in the legend showing larger values for population. This indicates that globally, we had an increase in resources and wealth which led to an overall growth in the lifetime length of the human population. Looking at the change, we can see that Asian countries, represented by the green dots, moved up the graph significantly more than countries in other regions. This indicates that Asian countries are developing at a faster rate, and quickly reaching that of countries in Europe and the Americas. However, Asia is an exception, countries in Africa and most in Oceania continue to lag behind Europe and the Americas and despite significant growth in Africa, the life expectancy continues to be smaller compared to other countries. Europe and the Americas didn't really change over this period in terms of life expectancy, but this makes sense since nations in these regions continued to be global superpowers 1960-2019, so they aren't going to be growing by drastic amounts in terms of life expectancy.  
+In 2019, almost all countries in regions globally seemed to have increased in life expectancy and population. This is shown by the shift the of y-axis scale to include above 80 years of age, since now there are countries with life expectancy above 80 years and by the change in the legend showing larger values for population. They also increased in terms of GDP as shown by the increase in scale to include 120,000 GDP per capita when it only included to 30,000 in 1960. This indicates that globally, we had an increase in resources and wealth which led to an overall growth in the lifetime length of the human population. Looking at the change, we can see that Asian countries, represented by the green dots, moved up the graph significantly more than countries in other regions. This indicates that Asian countries are developing at a faster rate, and quickly reaching that of countries in Europe and the Americas. However, Asia is an exception, countries in Africa and most in Oceania continue to lag behind Europe and the Americas and despite significant growth in Africa, the life expectancy continues to be smaller compared to other countries. Europe and some American nations didn't really change as significantly over this period in terms of life expectancy, but this makes sense since nations in these regions continued to be global superpowers 1960-2019, so they aren't going to be growing by drastic amounts in terms of life expectancy even if they do by GDP_PC. Other American countries however did show major changes in life expectancy and GDP_PC. Overall, these changes in the plots indicate that some countries and regions of the world are more likely to be able to lead longer lives simply because they have more money per person which is caused by disparities in access to resources and wealth building methods. Certain countries are catching up though and while the gap is not drastically reduced yet, the growth pattern seems to indicate that regions such as Africa and Asia are catching up. 
 
 ```{r}
 ## Question 4
@@ -217,7 +221,7 @@ head(LE_lag,5)
 
 #### 5. (8pt) Compute the average LE growth from 1960-2019 across the continents. Show the results in the order of growth. Explain what do you see. Hint: these data (data in long form) is not the simplest to compute growth. But you may want to check out the lag() function. And do not forget to group data by continent when using lag(), otherwise your results will be messed up! See https://faculty.washington. edu/otoomet/info201-book/dplyr.html#dplyr-helpers-compute.
 
-I assumed this question to mean the average of the growth between 1960 and 2019 per country in each region. The average life expectancy growth from 1960-2019 was the largest for Asia and the smallest for Europe with values `r LE_lag[5,5] ` years and `r LE_lag[1,5]` years respectively. The other regions fall in between these two extremes. Africa had the second highest growth with a value of `r LE_lag[4,5]`years which is almost the twice the growth of Europe. Oceania had a growth of `r LE_lag[2,5]` and the Americas a growth of `r LE_lag[3,5]` years. This indicates that Asia and Africa had a much larger life expectancy growth over this time period. This implies that countries in Asia and Africa must have had access to more resources and money over this time, than they began with, such that they could increase their lifetime. While Americas and Oceania grew, they didn't grow as much meaning they didn't have as much room to develop as Africa and Asia. And Europe, known to contain many superpower countries, grew the least because it already had a high life expectancy to begin with and didn't develop significantly like countries in Africa or Asia to show a large increase in life expectancy.  
+I assumed this question to mean the average of the growth between 1960 and 2019 per country in each region. The average life expectancy growth from 1960-2019 was the largest for Asia and the smallest for Europe with values `r LE_lag[5,5] ` years and `r LE_lag[1,5]` years respectively. The other regions fall in between these two extremes. Africa had the second highest growth with a value of `r LE_lag[4,5]`years which is almost the twice the growth of Europe. Oceania had a growth of `r LE_lag[2,5]` and the Americas a growth of `r LE_lag[3,5]` years. This indicates that Asia and Africa had a much larger life expectancy growth over this time period. This implies that countries in Asia and Africa must have had access to more resources and money over this time, than they began with, such that they could increase their lifetime. While Americas and Oceania grew, they didn't grow as much meaning they didn't have as much room to develop as Africa and Asia. And Europe, known to contain many superpower countries, grew the least because it already had a high life expectancy and lots of resources to begin with and didn't develop significantly like countries in Africa or Asia to show a large increase in life expectancy.  
 
 ```{r}
 ## Question 6
@@ -232,7 +236,7 @@ ggplot(histogram,aes(x = GDP_PC, fill = as.factor(time))) +
 
 #### 6. (6pt) Show the histogram of GDP per capita for years of 1960 and 2019. Try to put both histograms on the same graph, see how well you can do it!
 
-This graph shows that there were more countries with higher GDP per Capita in 2019 than in 1960 but at the same time there were more countries with lower GDPs. This could indicate an increase in the number of countries in general over the years, or the fact that the GDPs are more spread out due to an increase in global superpowers. This would create a more prominent divide between countries of the world, meaning there are poorer countries and richer countries (essentially greater variability in data). 
+This graph shows that there were more countries with higher GDP per Capita in 2019 than in 1960 but at the same time there were more countries with lower GDPs. This could indicate an increase in the number of countries in general over the years, or the fact that the GDPs are more spread out due to an increase in global superpowers. This would create a more prominent divide between countries of the world, meaning there are poorer countries and richer countries (essentially greater variability/spread in data) than there were in 1960. 
 
 
 ```{r}
@@ -241,7 +245,7 @@ ranks <- gapminder %>% select(time,name,lifeExpectancy) %>% filter(!name == "", 
 ```
 
 #### 7. (6pt) What was the ranking of US in terms of life expectancy in 1960 and in 2019? (When counting from top.) Hint: check out the function rank()! Hint2: 17 for 1960.
-The ranking of the US in terms of life expectancy is `r ranks[1,4]` in 1960 and `r ranks[2,4]` in 2019. 
+The ranking of the US in terms of life expectancy is `r ranks[1,4]` in 1960 and `r ranks[2,4]` in 2019. This means that the US had a higher ranking relative to other countries in 1960 than it did in 2019, or in other words, the US fell in rankings over time.
 
 ```{r}
 ## Question 8
@@ -250,7 +254,7 @@ ranks_cont <- gapminder %>% select(time,name,lifeExpectancy) %>% filter(!name ==
 ```
 
 #### 8. (6pt) If you did this correctly, then you noticed that US ranking has been falling quite a bit. But we also have more countries in 2019–what about the relative rank divided by the corresponding number of countries that have LE data in the corresponding year? Hint: 0.0904 for 1960.
-The relative ranking of the US in terms of life expectancy is `r ranks_cont[1,4]` in 1960 and `r ranks_cont[2,4]` in 2019. 
+The relative ranking of the US in terms of life expectancy and the number of countries with LE data in that corresponding year is `r ranks_cont[1,4]` in 1960 and `r ranks_cont[2,4]` in 2019. This indicates that relative to all the countries in the data each year, the US ranking has actually increased not decreased.
 
 #### Finally tell us how many hours did you spend on this PS.
 I spent 4 hours total on the problem set.
